@@ -17,13 +17,13 @@ public class GithubProvider {
 
         RequestBody body = RequestBody.create(mediaType, JSON.toJSONString(accessTokenDTO));
         Request request = new Request.Builder()
-                .url("https://github.com/login/oauth/authorize")
+                .url("https://github.com/login/oauth/access_token")
                 .post(body)
                 .build();//用post请求发送到accessToken接口
         try (Response response = client.newCall(request).execute()) {
             String string = response.body().string();
-            System.out.println(string);
-            return string;
+            String token = string.split("&")[0].split("=")[1];
+            return token;//通过对其拆解，得到token，并返回
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -34,9 +34,11 @@ public class GithubProvider {
         Request request = new Request.Builder()
                 .url("https://api.github.com/user?access_Token="+accessToken)
                 .build();
-        try (Response response = client.newCall(request).execute();) {
+        try {
+            Response response = client.newCall(request).execute();
             String string = response.body().string();
             GithubUser githubUser=JSON.parseObject(string,GithubUser.class);
+            return githubUser;
             } catch (IOException e) {
         }
         return null;
