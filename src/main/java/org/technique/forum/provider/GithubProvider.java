@@ -25,7 +25,6 @@ public class GithubProvider {
             String token = string.split("&")[0].split("=")[1];
             return token;//通过对其拆解，得到token，并返回
         } catch (Exception e) {
-            e.printStackTrace();
         }
         return null;
     }
