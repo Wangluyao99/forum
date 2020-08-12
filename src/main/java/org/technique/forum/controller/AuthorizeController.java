@@ -13,7 +13,7 @@ import org.technique.forum.provider.GithubProvider;
 public class AuthorizeController {
 
     @Autowired
-    //自动把spring容器中写好的实例化的实例，加载到当前使用的上下文
+   /**自动把spring容器中写好的实例化的实例，加载到当前使用的上下文*/
     private GithubProvider githubProvider;
 
     @Value("${github.client.id}")

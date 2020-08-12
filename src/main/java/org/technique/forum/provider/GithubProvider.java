@@ -5,7 +5,6 @@ import okhttp3.*;
 import org.springframework.stereotype.Component;
 import org.technique.forum.dto.AccessTokenDTO;
 import org.technique.forum.dto.GithubUser;
-import sun.awt.geom.AreaOp;
 
 import java.io.IOException;
 
@@ -17,13 +16,14 @@ public class GithubProvider {
 
         RequestBody body = RequestBody.create(mediaType, JSON.toJSONString(accessTokenDTO));
         Request request = new Request.Builder()
-                .url("https://github.com/login/oauth/access_token")
+                .url("https://github.com/login/oauth/access_token?client_id=baed17714a7ce460cdb0&redirect_uri=http://localhost:8080/callback&scope=user&state=1")
                 .post(body)
                 .build();//用post请求发送到accessToken接口
         try (Response response = client.newCall(request).execute()) {
             String string = response.body().string();
-            String token = string.split("&")[0].split("=")[1];
-            return token;//通过对其拆解，得到token，并返回
+            System.out.println(string);
+            /**String token = string.split("&")[0].split("=")[1];
+            return token;//通过对其拆解，得到token，并返回*/
         } catch (Exception e) {
         }
         return null;
