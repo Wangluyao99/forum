@@ -21,10 +21,11 @@ public class GithubProvider {
                 .build();//用post请求发送到accessToken接口
         try (Response response = client.newCall(request).execute()) {
             String string = response.body().string();
-            System.out.println(string);
-            /**String token = string.split("&")[0].split("=")[1];
-            return token;//通过对其拆解，得到token，并返回*/
+           String token = string.split("&")[0].split("=")[1];
+            System.out.println(token);
+            return token;//通过对其拆解，得到token，并返回
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }
